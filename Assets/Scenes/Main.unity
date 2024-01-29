@@ -5705,6 +5705,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1385802745}
   - component: {fileID: 1385802746}
+  - component: {fileID: 1385802747}
   m_Layer: 0
   m_Name: Ads_Manager
   m_TagString: Untagged
@@ -5737,6 +5738,18 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: ee1cf715675791d40b81f4708359c1da, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &1385802747
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1385802743}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 01bf753680ea227449a53350d8b7aefd, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
 --- !u!1 &1421773779

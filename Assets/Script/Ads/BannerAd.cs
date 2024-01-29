@@ -10,11 +10,11 @@ using GoogleMobileAds.Api;
 public class BannerAd : MonoBehaviour
 {
 #if UNITY_ANDROID
-    private string _adUnitId = "ca-app-pub-3940256099942544/6300978111";
+    private string _adUnitId = "ca-app-pub-3940256099942544/9214589741";
 #elif UNITY_IPHONE
   private string _adUnitId = "ca-app-pub-3940256099942544/2934735716";
 #else
-  private string _adUnitId = "unused";
+  private string _adUnitId = "ca-app-pub-3940256099942544/9214589741";
 #endif
 
     // Start is called before the first frame update

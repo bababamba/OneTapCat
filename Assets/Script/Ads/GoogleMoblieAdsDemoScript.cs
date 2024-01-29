@@ -8,7 +8,7 @@ using System;
 public class GoogleMoblieAdsDemoScript : MonoBehaviour
 {
 #if UNITY_ANDROID
-    private string _adUnitId = "ca-app-pub-8294817963933069/9507034328";
+    private string _adUnitId = "ca-app-pub-8294817963933069/8285801708";
 #elif UNITY_IPHONE
   private string _adUnitId = "ca-app-pub-3940256099942544/6978759866";
 #else
