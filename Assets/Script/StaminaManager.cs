@@ -5,6 +5,11 @@ using TMPro;
 
 public class StaminaManager : MonoBehaviour
 {
+    public static StaminaManager instance;
+    void Awake()
+    {
+        instance = this;
+    }
     //public static StaminaManager stamina;
     [SerializeField] TMP_Text time_text;
     [SerializeField] TMP_Text stamina_text;

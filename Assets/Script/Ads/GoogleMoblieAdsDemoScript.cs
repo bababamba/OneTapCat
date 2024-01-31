@@ -4,6 +4,7 @@ using UnityEngine;
 using GoogleMobileAds;
 using GoogleMobileAds.Api;
 using System;
+using Random = System.Random;
 
 public class GoogleMoblieAdsDemoScript : MonoBehaviour
 {
@@ -15,16 +16,19 @@ public class GoogleMoblieAdsDemoScript : MonoBehaviour
   private string _adUnitId = "unused";
 #endif
 
+    Random r = new Random();
+
     private RewardedInterstitialAd _rewardedInterstitialAd;
 
     // Start is called before the first frame update
-    void Start()
+    public void Start()
     {
+        
         // Initialize the Google Mobile Ads SDK.
         MobileAds.Initialize((InitializationStatus initStatus) =>
         {
             // This callback is called once the MobileAds SDK is initialized.
-            LoadRewardedInterstitialAd();
+            //LoadRewardedInterstitialAd();
         });
     }
 
@@ -78,6 +82,19 @@ public class GoogleMoblieAdsDemoScript : MonoBehaviour
         {
             _rewardedInterstitialAd.Show((Reward reward) =>
             {
+                int temp = r.Next(0, 1000);
+                int Value = 0;
+                switch (temp)
+                {
+                    case int n when (0 <= n && n <= 1): Value = 30; break;
+
+                    case int n when (2 <= n && n <= 31): Value = 20; break;
+
+                    case int n when (32 <= n && n <= 671): Value = 15; break;
+
+                    case int n when (672 <= n && n <= 999): Value = 10; break;
+                }
+                StaminaManager.instance.StaminaUp(Value);
                 // TODO: Reward the user.
                 Debug.Log(String.Format(rewardMsg, reward.Type, reward.Amount));
 
@@ -92,9 +109,14 @@ public class GoogleMoblieAdsDemoScript : MonoBehaviour
         // Raised when the ad is estimated to have earned money.
         ad.OnAdPaid += (AdValue adValue) =>
         {
+            
+            
             Debug.Log(String.Format("Rewarded interstitial ad paid {0} {1}.",
                 adValue.Value,
                 adValue.CurrencyCode));
+            
+
+
         };
         // Raised when an impression is recorded for an ad.
         ad.OnAdImpressionRecorded += () =>

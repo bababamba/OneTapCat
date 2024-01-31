@@ -44,7 +44,7 @@ public class AdaptiveBannerAd : MonoBehaviour
           0.25f * Screen.height,
           0.7f * Screen.width,
           0.3f * Screen.height);
-        GUI.Label(textOutputRect, "Adaptive Banner Example");
+       // GUI.Label(textOutputRect, "Adaptive Banner Example");
     }
 
     private void RequestBanner()
