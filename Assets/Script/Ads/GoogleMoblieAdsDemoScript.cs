@@ -9,7 +9,7 @@ using Random = System.Random;
 public class GoogleMoblieAdsDemoScript : MonoBehaviour
 {
 #if UNITY_ANDROID
-    private string _adUnitId = "ca-app-pub-8294817963933069/8285801708";
+    private string _adUnitId = "ca-app-pub-3940256099942544/5354046379";
 #elif UNITY_IPHONE
   private string _adUnitId = "ca-app-pub-3940256099942544/6978759866";
 #else
@@ -154,7 +154,7 @@ public class GoogleMoblieAdsDemoScript : MonoBehaviour
             Debug.Log("Rewarded interstitial ad full screen content closed.");
 
             // Reload the ad so that we can show another as soon as possible.
-            LoadRewardedInterstitialAd();
+            //LoadRewardedInterstitialAd();
         };
         // Raised when the ad failed to open full screen content.
         ad.OnAdFullScreenContentFailed += (AdError error) =>
@@ -163,7 +163,7 @@ public class GoogleMoblieAdsDemoScript : MonoBehaviour
                            "full screen content with error : " + error);
 
             // Reload the ad so that we can show another as soon as possible.
-            LoadRewardedInterstitialAd();
+           // LoadRewardedInterstitialAd();
         };
     }
 }
