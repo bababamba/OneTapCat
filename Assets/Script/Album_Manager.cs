@@ -33,10 +33,13 @@ public class Album_Manager : MonoBehaviour
     {
         CurStage = stageNum;
         CatSelect(stageNum);
+        UpdateStars();
         for (int i=0; i < 6; i++){
-
             //Debug.Log(Main_Manager.instance.cleared[(stageNum - 1) * 6 + i]);
-            CurStars[i].SetActive(Main_Manager.instance.cleared[(stageNum - 1) * 6 + i]);
+            int temp = 0;
+            ActiveCurStars(stageNum);
+            //CurStars[i].SetActive(Main_Manager.instance.cleared[(stageNum - 1) * 6 + i]);
+
             RewardGuard[i].SetActive(!(Main_Manager.instance.cleared[(stageNum - 1) * 6 + i]));
             CGGuard[i].SetActive(!(Main_Manager.instance.cleared[(stageNum - 1) * 6 + i]));
             //Debug.Log(CheckedReward[(stageNum - 1) * 6 + i]);
@@ -49,6 +52,56 @@ public class Album_Manager : MonoBehaviour
             Endings_Title[i].text = Main_Manager.instance.quest1[(stageNum - 1) * 10 + i + 4];
 
 
+        }
+    }
+    public void OpenAlbum()
+    {
+        ChangeStage(CurStage);
+    }
+    void ActiveCurStars(int stageNum)
+    {
+        // Cleared 배열에서 true인 요소의 개수를 세기
+        int clearedCount = 0;
+        for (int i = 0; i < 6; i++)
+        {
+            if (Main_Manager.instance.cleared[(stageNum - 1) * 6 + i])
+            {
+                clearedCount++;
+            }
+        }
+
+        // 별들을 앞에서부터 clearedCount만큼 활성화
+        for (int i = 0; i < 6; i++)
+        {
+            if (i < clearedCount)
+            {
+                CurStars[i].SetActive(true);
+            }
+            else
+            {
+                CurStars[i].SetActive(false);
+            }
+        }
+
+    }
+    public void UpdateStars()
+    {
+        int temp = 0;
+        for(int i = 0; i < 5; i++)
+        {
+            temp = 0;
+            for (int j = 0; j < 6; j++)
+            {
+                if (Main_Manager.instance.cleared[i * 6 + j])
+                    temp++;
+            }
+            for (int j = 0; j < 6; j++)
+            {
+                if (j < temp)
+                    Stars[i * 6 + j].SetActive(true);
+                else
+                    Stars[i * 6 + j].SetActive(false);
+            }
         }
     }
     void CatSelect(int stageNum)

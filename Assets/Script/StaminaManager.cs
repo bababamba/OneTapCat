@@ -14,8 +14,8 @@ public class StaminaManager : MonoBehaviour
     [SerializeField] TMP_Text time_text;
     [SerializeField] TMP_Text stamina_text;
 
-    int CurStamina = 50;
-    static int MaxStamina = 100;
+    int CurStamina = 55;
+    static int MaxStamina = 400;
 
     float CurStaminaTime = 30f;
     static float MaxStaminaTime = 60f;
@@ -28,12 +28,12 @@ public class StaminaManager : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (CurStamina <= MaxStamina)
+        if (CurStamina < MaxStamina)
         {
             CurStaminaTime -= Time.deltaTime;
             UpdateDisplay();
         }
-        if (CurStaminaTime <= 0)
+        if (CurStaminaTime < 0)
         {
             CurStaminaTime = MaxStaminaTime;
             //임시 자동 스테미나 충전량
@@ -55,7 +55,7 @@ public class StaminaManager : MonoBehaviour
     //스테미나 감소시, 감소하였을 때에 0 미만인지 체크
     public bool StaminaCheck(int value)
     {
-        if (CurStamina - value > 0f)
+        if (CurStamina - value >= 0f)
         {
             return true;
         }

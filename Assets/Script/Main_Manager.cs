@@ -11,12 +11,16 @@ public class Main_Manager : MonoBehaviour
     {
         instance = this;
     }
+    [SerializeField] Video_Ad VAds;
+
     [SerializeField] int energy;
     [SerializeField] int energy_time;
+    [SerializeField] Sprite[] Backgrounds; 
 
     [SerializeField] Image Main_Sprite;
     [SerializeField] Image Right_Sprite;
     [SerializeField] Image Left_Sprite;
+    [SerializeField] Image BackImage;
 
     [SerializeField] Sprite[] Main_Image;
     [SerializeField] Sprite[] Right_Image;
@@ -43,6 +47,10 @@ public class Main_Manager : MonoBehaviour
     [SerializeField] TMP_Text HaveCost;
     [SerializeField] GameObject DonHavePopUp;
 
+    [SerializeField] Image[]    StageImages;
+    [SerializeField] Sprite[]   StageSprites;
+
+    bool NoAds = false;
 
     public bool[] cleared =  {  
         true, false, true, false, false, false,
@@ -162,6 +170,7 @@ public class Main_Manager : MonoBehaviour
     }
     public void UpdateScreen(int progressNumber) {
         //Debug.Log(progress);
+        BackImage.sprite = Backgrounds[0];
         UpperMessage.text = quest1[(stage - 1) * 10+progress];
         Main_Sprite.sprite = Main_Image[(stage - 1) * 4 + progressNumber];
         Right_Sprite.sprite = Right_Image[(stage - 1) * 4 + progressNumber];
@@ -174,6 +183,7 @@ public class Main_Manager : MonoBehaviour
         Failcard.SetActive(true);
         UpperMessage.text = quest1[(stage - 1) * 10 + 3 + endNumber];
         FailMessage.text = script1[(stage - 1) * 6 +endNumber - 1];
+        BackImage.sprite = Backgrounds[1];
 
     }
     int Ending()
@@ -199,15 +209,21 @@ public class Main_Manager : MonoBehaviour
     }
     public void EndingScreen(int endNumber)
     {
+        if(!NoAds)
+            VAds.ShowAd();
         Main_Sprite.sprite = Ending_Image[(stage - 1) * 4 + endNumber-1];
         EndMessage.text = script1[(stage-1)*6 + endNumber + 1];
         UpperMessage.text = quest1[(stage - 1) * 10 +5 + endNumber];
         Endcard.SetActive(true);
         cleared[(stage - 1) * 6 + endNumber+1] = true;
+        BackImage.sprite = Backgrounds[2];
+
 
     }
     public void Retry()
     {
+        if (!NoAds)
+            VAds.ShowAd();
         progress = 0;
         Failcard.SetActive(false);
         UpdateScreen(progress);
@@ -307,6 +323,7 @@ public class Main_Manager : MonoBehaviour
         Album.SetActive(false);
         HavePopUp.SetActive(false);
         DonHavePopUp.SetActive(false);
+        BackImage.sprite = Backgrounds[0];
     }
     public void OpenMainGame()
     {
@@ -330,6 +347,7 @@ public class Main_Manager : MonoBehaviour
     public void StartGame()
     {
         StaminaManager.instance.StaminaDown(cost[stage - 1]);
+        StageImages[stage - 1].sprite = StageSprites[stage - 1];
         CloseAll();
         MainGame.SetActive(true);
         UpdateScreen(0);
@@ -351,7 +369,7 @@ public class Main_Manager : MonoBehaviour
     {
         CloseAll();
         Album.SetActive(true);
-        AlManager.ChangeStage(1);
+        AlManager.OpenAlbum();
     }
     public void HavePopUpOn()
     {
@@ -376,7 +394,10 @@ public class Main_Manager : MonoBehaviour
     {
         DonHavePopUp.SetActive(true);
     }
-
+    public void NoAdsPuchased()
+    {
+        NoAds = true;
+    }
 
 
 }
