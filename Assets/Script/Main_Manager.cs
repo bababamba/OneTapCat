@@ -4,6 +4,7 @@ using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
 
+
 public class Main_Manager : MonoBehaviour
 {
     public static Main_Manager instance;
@@ -46,15 +47,16 @@ public class Main_Manager : MonoBehaviour
     [SerializeField] TMP_Text HaveText;
     [SerializeField] TMP_Text HaveCost;
     [SerializeField] GameObject DonHavePopUp;
+    [SerializeField] GameObject ReallyGoPopUp;
 
     [SerializeField] Image[]    StageImages;
     [SerializeField] Sprite[]   StageSprites;
 
     bool NoAds = false;
-
+    int selectGo = 0;
     public bool[] cleared =  {  
-        true, false, true, false, false, false,
-        true, false, false, false, false, false,
+        false, false, false, false, false, false,
+        false, false, false, false, false, false,
         false, false, false, false, false, false,
         false, false, false, false, false, false,
         false, false, false, false, false, false,
@@ -154,6 +156,21 @@ public class Main_Manager : MonoBehaviour
 
 
     };
+    public string[] stageName =
+    {
+        "학교 가는 길",
+
+        "냥튜버 키우기",
+
+        "겨울 방학 보내기",
+
+        "아이돌냥 키우기",
+
+        "여름 축제에서",
+
+        "학교 가는 길",
+
+    };
 
 
     // Start is called before the first frame update
@@ -224,7 +241,7 @@ public class Main_Manager : MonoBehaviour
     {
         if (!NoAds)
             VAds.ShowAd();
-        progress = 0;
+        //progress--;
         Failcard.SetActive(false);
         UpdateScreen(progress);
     }
@@ -398,6 +415,30 @@ public class Main_Manager : MonoBehaviour
     {
         NoAds = true;
     }
-
+    public void InGameOpenStagesSelectScreen()
+    {
+        selectGo = 1;
+        ReallyGoPopUp.SetActive(true);
+    }
+    public void InGameOpenShop()
+    {
+        selectGo = 2;
+        ReallyGoPopUp.SetActive(true);
+    }
+    public void InGameOpenAlbum()
+    {
+        selectGo = 3;
+        ReallyGoPopUp.SetActive(true);
+    }
+    public void ReallyGo()
+    {
+        switch (selectGo)
+        {
+            case 1: OpenStagesSelectScreen(); break;
+            case 2: OpenShop(); break;
+            case 3: OpenAlbum(); break;
+        }
+    
+    }
 
 }

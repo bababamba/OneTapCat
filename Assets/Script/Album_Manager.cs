@@ -6,6 +6,7 @@ using TMPro;
 
 public class Album_Manager : MonoBehaviour
 {
+    [SerializeField] TMP_Text[] StageTitles;
     [SerializeField] GameObject[] Stars;
     [SerializeField] GameObject[] CurStars;
     [SerializeField] Image[] Endings;
@@ -34,6 +35,8 @@ public class Album_Manager : MonoBehaviour
         CurStage = stageNum;
         CatSelect(stageNum);
         UpdateStars();
+        StageTitles[0].text = "stage " + stageNum.ToString();
+        StageTitles[1].text = Main_Manager.instance.stageName[stageNum - 1];
         for (int i=0; i < 6; i++){
             //Debug.Log(Main_Manager.instance.cleared[(stageNum - 1) * 6 + i]);
             int temp = 0;
@@ -115,6 +118,7 @@ public class Album_Manager : MonoBehaviour
         CheckedReward[(CurStage - 1) * 6 + Num] = true;
         RewardCheck[Num].SetActive(CheckedReward[(CurStage - 1) * 6 + Num]);
         StaminaManager.instance.StaminaUp(5);
+        Fx_Manager.instance.GetItemFx(5);
     }
     
 
