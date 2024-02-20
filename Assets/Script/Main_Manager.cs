@@ -55,7 +55,7 @@ public class Main_Manager : MonoBehaviour
     [SerializeField] Image[]    StageImages;
     [SerializeField] Sprite[]   StageSprites;
 
-    bool NoAds = false;
+    public bool NoAds = false;
     int selectGo = 0;
     public bool[] cleared =  {  
         false, false, false, false, false, false,
@@ -192,9 +192,14 @@ public class Main_Manager : MonoBehaviour
         //Debug.Log(progress);
         BackImage.sprite = Backgrounds[0];
         UpperMessage.text = quest1[(stage - 1) * 10+progress];
+
         Main_Sprite.sprite = Main_Image[(stage - 1) * 4 + progressNumber];
         Right_Sprite.sprite = Right_Image[(stage - 1) * 4 + progressNumber];
         Left_Sprite.sprite = Left_Image[(stage - 1) * 4 + progressNumber];
+
+        Fx_Manager.instance.Ddoing(Main_Sprite.GetComponent<RectTransform>());
+        Fx_Manager.instance.Ddoing(Right_Sprite.GetComponent<RectTransform>());
+        Fx_Manager.instance.Ddoing(Left_Sprite.GetComponent<RectTransform>());
     }
     public void FailScreen(int endNumber)
     {
@@ -204,6 +209,10 @@ public class Main_Manager : MonoBehaviour
         UpperMessage.text = quest1[(stage - 1) * 10 + 3 + endNumber];
         FailMessage.text = script1[(stage - 1) * 6 +endNumber - 1];
         BackImage.sprite = Backgrounds[1];
+
+        Fx_Manager.instance.Ddoing(Main_Sprite.GetComponent<RectTransform>());
+        Fx_Manager.instance.Ddoing(Right_Sprite.GetComponent<RectTransform>());
+        Fx_Manager.instance.Ddoing(Left_Sprite.GetComponent<RectTransform>());
 
     }
     int Ending()
@@ -229,8 +238,8 @@ public class Main_Manager : MonoBehaviour
     }
     public void EndingScreen(int endNumber)
     {
-        if(!NoAds)
-            VAds.ShowAd();
+        //if(!NoAds)VAds.ShowAd();
+
         Pre_Ending.SetActive(true);
         Pre_EndingFX.RunEffect();
         Main_Sprite.sprite = Ending_Image[(stage - 1) * 4 + endNumber-1];
@@ -403,6 +412,7 @@ public class Main_Manager : MonoBehaviour
     public void HavePopUpOn()
     {
         HavePopUp.SetActive(true);
+        Fx_Manager.instance.Ddoing(HavePopUp.GetComponent<RectTransform>());
         switch (stage)
         {
             case 1:
@@ -422,6 +432,7 @@ public class Main_Manager : MonoBehaviour
     public void DonHavePopUpOn()
     {
         DonHavePopUp.SetActive(true);
+        Fx_Manager.instance.Ddoing(DonHavePopUp.GetComponent<RectTransform>());
     }
     public void NoAdsPuchased()
     {
@@ -431,16 +442,20 @@ public class Main_Manager : MonoBehaviour
     {
         selectGo = 1;
         ReallyGoPopUp.SetActive(true);
+        Fx_Manager.instance.Ddoing(ReallyGoPopUp.GetComponent<RectTransform>());
+
     }
     public void InGameOpenShop()
     {
         selectGo = 2;
         ReallyGoPopUp.SetActive(true);
+        Fx_Manager.instance.Ddoing(ReallyGoPopUp.GetComponent<RectTransform>());
     }
     public void InGameOpenAlbum()
     {
         selectGo = 3;
         ReallyGoPopUp.SetActive(true);
+        Fx_Manager.instance.Ddoing(ReallyGoPopUp.GetComponent<RectTransform>());
     }
     public void ReallyGo()
     {

@@ -11,6 +11,7 @@ public class EndingFx : MonoBehaviour
     public Vector2[] targetPosition; // 목표 위치 설정
     public Image image;
     Sequence sequence;
+    [SerializeField] Video_Ad VAds;
     [SerializeField] GameObject EndingFxObject;
     int temp = 0;
     void Start()
@@ -41,6 +42,8 @@ public class EndingFx : MonoBehaviour
 
 
         }
+        if (!Main_Manager.instance.NoAds)
+            VAds.ShowAd();
         EndingFxObject.SetActive(false);
     }
 }
