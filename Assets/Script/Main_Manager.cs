@@ -23,11 +23,14 @@ public class Main_Manager : MonoBehaviour
     [SerializeField] Image Left_Sprite;
     [SerializeField] Image BackImage;
 
-    [SerializeField] Sprite[] Main_Image;
+    [SerializeField] public Sprite[] Main_Image;
     [SerializeField] Sprite[] Right_Image;
     [SerializeField] Sprite[] Left_Image;
     [SerializeField] public Sprite[] Ending_Image;
     [SerializeField] public Sprite[] Fail_Image;
+
+    [SerializeField] GameObject Pre_Ending;
+    [SerializeField] EndingFx Pre_EndingFX;
 
     [SerializeField] TMP_Text UpperMessage;
     [SerializeField] GameObject Endcard;
@@ -63,7 +66,7 @@ public class Main_Manager : MonoBehaviour
         false, false, false, false, false, false 
     } ;
 
-    int stage = 0;
+    public int stage = 0;
     int progress = 0;
     int EndA = 0;
     int EndB = 0;
@@ -177,7 +180,7 @@ public class Main_Manager : MonoBehaviour
     void Start()
     {
         stage = 1;progress = 0;// юс╫ц
-
+        //StartCoroutine(CascadeBugFix());
     }
 
     // Update is called once per frame
@@ -228,6 +231,8 @@ public class Main_Manager : MonoBehaviour
     {
         if(!NoAds)
             VAds.ShowAd();
+        Pre_Ending.SetActive(true);
+        Pre_EndingFX.RunEffect();
         Main_Sprite.sprite = Ending_Image[(stage - 1) * 4 + endNumber-1];
         EndMessage.text = script1[(stage-1)*6 + endNumber + 1];
         UpperMessage.text = quest1[(stage - 1) * 10 +5 + endNumber];
@@ -374,7 +379,14 @@ public class Main_Manager : MonoBehaviour
         CloseAll();
         progress = 0;
         UpdateScreen(0);
-        SelectScreen.SetActive(true);
+        
+        foreach (GameObject Select in StageSelect)
+        {
+            Select.SetActive(false);
+           
+        }
+        
+        StartCoroutine(CascadeEffectStageSelect());
     }
     public void OpenShop()
     {
@@ -441,4 +453,26 @@ public class Main_Manager : MonoBehaviour
     
     }
 
+
+    IEnumerator CascadeEffectStageSelect()
+    {
+        SelectScreen.SetActive(true);
+        
+
+        foreach (GameObject Select in StageSelect)
+        {
+            Select.SetActive(true);
+            Select.GetComponent<FadeFx>().resetAnim();
+            
+            yield return new WaitForSeconds(0.1f);
+            
+
+        }
+    }
+    IEnumerator CascadeBugFix()
+    {
+        SelectScreen.SetActive(true);
+        yield return null;
+        SelectScreen.SetActive(false) ;
+    }
 }

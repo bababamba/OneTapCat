@@ -16,7 +16,7 @@ public class Fx_Manager : MonoBehaviour
     }
     private void Start()
     {
-        GetItemFx(10);
+        //GetItemFx(10);
     }
     public void GetItemFx(int randCount)
     {
@@ -26,7 +26,7 @@ public class Fx_Manager : MonoBehaviour
             var itemFx = GameObject.Instantiate<ItemGetFx>(prefabItem, this.transform);
             itemFx.transform.SetParent(this.transform);
             itemFx.Explosion(start.position, target.position, 500.0f);
-            Debug.Log(i);
+            
         }
     }
 }

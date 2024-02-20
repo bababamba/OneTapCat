@@ -15,7 +15,7 @@ public class StaminaManager : MonoBehaviour
     [SerializeField] TMP_Text stamina_text;
 
     int CurStamina = 55;
-    static int MaxStamina = 400;
+    static int MaxStamina = 100;
 
     float CurStaminaTime = 30f;
     static float MaxStaminaTime = 60f;
@@ -94,8 +94,11 @@ public class StaminaManager : MonoBehaviour
     }
     public void UpdateDisplay()
     {
-        stamina_text.text = CurStamina.ToString();
-        time_text.text = ((int)CurStaminaTime / 60).ToString() +  ":" + ((int)CurStaminaTime % 60).ToString();
+        if (CurStamina == MaxStamina)
+            stamina_text.text = "FULL";
+        else
+            stamina_text.text = CurStamina.ToString();
+        time_text.text = ((int)CurStaminaTime / 60).ToString() +  ":" + ((int)CurStaminaTime % 60).ToString() + "√ ";
     } 
 
 }
