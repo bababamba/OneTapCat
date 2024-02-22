@@ -44,21 +44,21 @@ public class AdaptiveBannerAd : MonoBehaviour
           0.25f * Screen.height,
           0.7f * Screen.width,
           0.3f * Screen.height);
-       // GUI.Label(textOutputRect, "Adaptive Banner Example");
+        GUI.Label(textOutputRect, "Test");
     }
 
     private void RequestBanner()
     {
-        // These ad units are configured to always serve test ads.
-#if UNITY_EDITOR
-        string adUnitId = "unused";
-#elif UNITY_ANDROID
-            string adUnitId = "ca-app-pub-3940256099942544/6300978111";
-#elif UNITY_IPHONE
-            string adUnitId = "ca-app-pub-3212738706492790/5381898163";
-#else
-            string adUnitId = "unexpected_platform";
-#endif
+            // These ad units are configured to always serve test ads.
+        #if UNITY_EDITOR
+                string adUnitId = "unused";
+        #elif UNITY_ANDROID
+                    string adUnitId = "ca-app-pub-3940256099942544/6300978111";
+        #elif UNITY_IPHONE
+                    string adUnitId = "ca-app-pub-3212738706492790/5381898163";
+        #else
+                    string adUnitId = "unexpected_platform";
+        #endif
 
         // Clean up banner ad before creating a new one.
         if (_bannerView != null)
@@ -78,7 +78,11 @@ public class AdaptiveBannerAd : MonoBehaviour
         AdRequest adRequest = new AdRequest();
 
         // Load a banner ad.
-        _bannerView.LoadAd(adRequest);
+        UnityMainThread.wkr.AddJob(() =>
+        {
+            _bannerView.LoadAd(adRequest);
+        });
+        
     }
 
     #region Banner callback handlers

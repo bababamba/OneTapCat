@@ -4,7 +4,7 @@ using UnityEngine;
 using GoogleMobileAds;
 using GoogleMobileAds.Api;
 using System;
-using Random = System.Random;
+
 
 public class GoogleMoblieAdsDemoScript : MonoBehaviour
 {
@@ -16,7 +16,7 @@ public class GoogleMoblieAdsDemoScript : MonoBehaviour
   private string _adUnitId = "unused";
 #endif
 
-    Random r = new Random();
+    [SerializeField] vibrateCan viva;
 
     private RewardedInterstitialAd _rewardedInterstitialAd;
 
@@ -82,20 +82,13 @@ public class GoogleMoblieAdsDemoScript : MonoBehaviour
         {
             _rewardedInterstitialAd.Show((Reward reward) =>
             {
-                int temp = r.Next(0, 1000);
-                int Value = 0;
-                switch (temp)
+
+                UnityMainThread.wkr.AddJob(() =>
                 {
-                    case int n when (0 <= n && n <= 1): Value = 30; break;
 
-                    case int n when (2 <= n && n <= 31): Value = 20; break;
-
-                    case int n when (32 <= n && n <= 671): Value = 15; break;
-
-                    case int n when (672 <= n && n <= 999): Value = 10; break;
-                }
-                StaminaManager.instance.StaminaUp(Value);
-                // TODO: Reward the user.
+                    viva.transform.parent.gameObject.SetActive(true);
+                });
+                
                 Debug.Log(String.Format(rewardMsg, reward.Type, reward.Amount));
 
                 // Register the reload handler after showing the rewarded ad.

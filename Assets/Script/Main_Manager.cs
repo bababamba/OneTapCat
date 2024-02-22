@@ -180,15 +180,20 @@ public class Main_Manager : MonoBehaviour
     void Start()
     {
         stage = 1;progress = 0;// юс╫ц
+        Audio_Manager.Instance.BGM_Title();
         //StartCoroutine(CascadeBugFix());
     }
 
     // Update is called once per frame
     void Update()
     {
-        
+        if (Input.GetMouseButtonDown(0) || (Input.touchCount > 0 && Input.GetTouch(0).phase == TouchPhase.Began))
+        {
+            Audio_Manager.Instance.SFX_Click();
+        }
     }
-    public void UpdateScreen(int progressNumber) {
+    
+        public void UpdateScreen(int progressNumber) {
         //Debug.Log(progress);
         BackImage.sprite = Backgrounds[0];
         UpperMessage.text = quest1[(stage - 1) * 10+progress];

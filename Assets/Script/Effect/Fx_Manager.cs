@@ -23,7 +23,7 @@ public class Fx_Manager : MonoBehaviour
     }
     private void Start()
     {
-        GetItemFx(10);
+       // GetItemFx(10);
     }
     public void GetItemFx(int randCount)
     {
@@ -44,6 +44,14 @@ public class Fx_Manager : MonoBehaviour
     {
         rect.localScale = new Vector3(initialScale, initialScale, initialScale);
         rect.DOScale(new Vector3(targetScale, targetScale, targetScale), duration).SetEase(Ease.OutBack);
-      
+
     }
+    public void Gacha(RectTransform rect)
+    {
+        rect.localScale = new Vector3(initialScale, initialScale, initialScale);
+        
+        rect.DOScale(new Vector3(targetScale, targetScale, targetScale), duration).SetEase(Ease.OutBack);
+
+    }
+
 }

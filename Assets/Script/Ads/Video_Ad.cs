@@ -73,7 +73,11 @@ public class Video_Ad : MonoBehaviour
             RegisterEventHandlers(ad);
 
             // Inform the UI that the ad is ready.
-            AdLoadedStatus?.SetActive(true);
+            UnityMainThread.wkr.AddJob(() =>
+            {
+                AdLoadedStatus?.SetActive(true);
+            });
+            
         });
     }
 

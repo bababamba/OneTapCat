@@ -6,12 +6,25 @@ using UnityEngine.UI;
 public class Audio_Manager : MonoBehaviour
 {
     public static Audio_Manager Instance;
-    
+    public AudioSource bgm;
+    public AudioSource sfx;
+
+    //[SerializeField] GameObject a;
+    //[SerializeField] GameObject b;
+
+
+    public AudioClip Title;
+
+    public AudioClip Click;
+
     [SerializeField] GameObject[] CheckOn;
 
     void Awake()
     {
         Instance = this;
+       // bgm = a.GetComponent<AudioSource>();
+        //sfx = b.GetComponent<AudioSource>();
+        Debug.Log(bgm);
     }
 
     void Update()
@@ -24,8 +37,8 @@ public class Audio_Manager : MonoBehaviour
         {
             CheckOn[1].SetActive(true);
             CheckOn[0].SetActive(false);
-            //SetBGMVolume(1);
-           // SetSFXVolume(1);
+            SetBGMVolume(1);
+            SetSFXVolume(1);
         }
     }
     public void SoundOff()
@@ -34,8 +47,8 @@ public class Audio_Manager : MonoBehaviour
         {
             CheckOn[0].SetActive(true);
             CheckOn[1].SetActive(false);
-           // SetBGMVolume(0);
-           // SetSFXVolume(0);
+          SetBGMVolume(0);
+          SetSFXVolume(0);
         }
     }
        public void SetLanguage(int nation)
@@ -77,120 +90,31 @@ public class Audio_Manager : MonoBehaviour
 
     }
 
-    public AudioSource bgmSource;
-    public AudioSource sfxSource;
 
-    public AudioClip Title;
-    public AudioClip Merge;
-    public AudioClip Tutorial;
-    public AudioClip Boss;
 
-    public AudioClip ClickBucket;
-    public AudioClip PushItem;
-    public AudioClip ItemMerge;
-    public AudioClip QuestDone;
-    public AudioClip WrongItem;
-    public AudioClip ButtonClick;
-    public AudioClip MapFull;
-    public AudioClip BossNoTime;
-    public AudioClip BossWinGetItem;
-    public AudioClip GameOver;
-    public AudioClip BuyItem;
-    public AudioClip paperRip;
 
-    public AudioClip buildSound1;
-    public AudioClip buildSound2;
-
-    public void SFX_BuildSound1()
-    {
-        sfxSource.PlayOneShot(buildSound1);
-    }
-
-    public void SFX_BuildSound2()
-    {
-        sfxSource.PlayOneShot(buildSound2);
-    }
-
-    public void BGM_Title()
-    {
-        bgmSource.clip = Title;
-        bgmSource.Play();
-    }
-    public void BGM_Merge()
-    {
-        bgmSource.clip = Merge;
-        bgmSource.Play();
-    }
-    public void BGM_Tutorial()
-    {
-        bgmSource.clip = Tutorial;
-        bgmSource.Play();
-    }
-    public void BGM_Boss()
-    {
-        bgmSource.clip = Boss;
-        bgmSource.Play();
-    }
+    float BGMVolume;
+    float SFXVolume;
 
     public void SetBGMVolume(float volume)
     {
-        bgmSource.volume = volume;
-        PlayerPrefs.SetFloat("BGMVolume", volume);
+        bgm.volume = volume;
     }
 
     public void SetSFXVolume(float volume)
     {
-        sfxSource.volume = volume;
-        PlayerPrefs.SetFloat("SFXVolume", volume);
+        sfx.volume = volume;
+    }
+    public void BGM_Title()
+    {
+        Debug.Log(bgm);
+        bgm.clip = Title;
+        bgm.Play();
+    }
+    public void SFX_Click()
+    {
+        sfx.PlayOneShot(Click);
     }
 
-    public void SFX_ClickBucket()
-    {
-        sfxSource.PlayOneShot(ClickBucket);
-    }
 
-    public void SFX_PaperRip()
-    {
-        sfxSource.PlayOneShot(paperRip);
-    }
-    public void SFX_PushItem()
-    {
-        sfxSource.PlayOneShot(PushItem);
-    }
-    public void SFX_ItemMerge()
-    {
-        sfxSource.PlayOneShot(ItemMerge);
-    }
-    public void SFX_QuestDone()
-    {
-        sfxSource.PlayOneShot(QuestDone);
-    }
-    public void SFX_WrongItem()
-    {
-        sfxSource.PlayOneShot(WrongItem);
-    }
-    public void SFX_ButtonClick()
-    {
-        sfxSource.PlayOneShot(ButtonClick);
-    }
-    public void SFX_MapFull()
-    {
-        sfxSource.PlayOneShot(MapFull);
-    }
-    public void SFX_BossNoTime()
-    {
-        sfxSource.PlayOneShot(BossNoTime);
-    }
-    public void SFX_BossWinGetItem()
-    {
-        sfxSource.PlayOneShot(BossWinGetItem);
-    }
-    public void SFX_GameOver()
-    {
-        sfxSource.PlayOneShot(GameOver);
-    }
-    public void SFX_BuyItem()
-    {
-        sfxSource.PlayOneShot(BuyItem);
-    }
 }
