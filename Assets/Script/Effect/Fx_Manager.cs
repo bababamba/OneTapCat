@@ -15,7 +15,7 @@ public class Fx_Manager : MonoBehaviour
     public Transform start;
 
     public float initialScale = 0.2f;
-    public float targetScale = 1.0f;
+    public float targetScale = 0.95f;
     public float duration = 0.5f;
     private void Awake()
     {

@@ -18,16 +18,20 @@ public class Main_Manager : MonoBehaviour
     [SerializeField] int energy_time;
     [SerializeField] Sprite[] Backgrounds; 
 
-    [SerializeField] Image Main_Sprite;
-    [SerializeField] Image Right_Sprite;
-    [SerializeField] Image Left_Sprite;
+    [SerializeField] Image Main_Image;
+    [SerializeField] Image Right_Image;
+    [SerializeField] Image Left_Image;
     [SerializeField] Image BackImage;
 
-    [SerializeField] public Sprite[] Main_Image;
-    [SerializeField] Sprite[] Right_Image;
-    [SerializeField] Sprite[] Left_Image;
-    [SerializeField] public Sprite[] Ending_Image;
-    [SerializeField] public Sprite[] Fail_Image;
+    [SerializeField] public Sprite[] Main_Sprite;
+    [SerializeField] Sprite[] Right_Sprite;
+    [SerializeField] Sprite[] Left_Sprite;
+    [SerializeField] public Sprite[] Ending_Sprite;
+    [SerializeField] public Sprite[] Fail_Sprite;
+    
+    [SerializeField] public Sprite[] extra_Main_Sprite;
+    [SerializeField] Sprite[] extra_Right_Sprite;
+    [SerializeField] Sprite[] extra_Left_Sprite;
 
     [SerializeField] GameObject Pre_Ending;
     [SerializeField] EndingFx Pre_EndingFX;
@@ -54,6 +58,7 @@ public class Main_Manager : MonoBehaviour
 
     [SerializeField] Image[]    StageImages;
     [SerializeField] Sprite[]   StageSprites;
+    [SerializeField] RectTransform content;
 
     public bool NoAds = false;
     int selectGo = 0;
@@ -67,15 +72,21 @@ public class Main_Manager : MonoBehaviour
     } ;
 
     public int stage = 0;
+    int progressEnd = 4;
     int progress = 0;
     int EndA = 0;
     int EndB = 0;
     int[] cost = { 30, 35, 40, 45, 50, 55, 60 };
     int[] data1 = {
-        0,5,1,2,3,4,6,0,
-        1,2,5,0,3,4,6,0,
-        1,2,0,5,6,0,3,4,
-        1,2,5,0,6,0,3,4
+        0,5, 1,2, 3,4, 6,0,
+        1,2, 5,0, 3,4, 6,0,
+        1,2, 0,5, 6,0, 3,4,
+        1,2, 5,0, 6,0, 3,4,
+        0,5, 0,0, 6,0, 7,0
+    };
+    int[] extra_Data =
+    {   8,0, 1,9
+
     };
     string[] script1 = { 
         "\"냐아앙..\" \n지각해서 혼났다. 5분만 더 잔다는 게 30분이나 자버렸다니…", //stage1
@@ -106,12 +117,12 @@ public class Main_Manager : MonoBehaviour
         "\"츄르는 없어! 배고파도~\"\n 엉뚱함이 매력인 뉴냥스의 해냥이가 됐다!",
         "\"어떻게 집사까지 사랑하겠어~\"\n 작곡도 목소리도 좋은 실력파 남매 냥냥뮤지션이 됐다!",
 
-        "",
-        "",
-        "",
-        "",
-        "",
-        "",
+        "\"갑자기.. 약속이 생겨서..\"\n 썸남이 약속이 생겼다며 도망갔다.\n 예쁘게 입을 걸 그랬나?",
+        "\"챱챱.. 할 수 있을 거 같아..\"\n 우산 모양을 뽑은 냥이\n 갑자기 분위기 오징어 게임!",
+        "\"또.. 또..! 또!!! 꽝?!!!!!\"\n 우주최강 똥손 냥이가 됐다.\n 이러다 거지가 되겠어..",
+        "\"냐앙.. 옷이 터질 거 같아..\"\n 타코야끼를 너무 많이 먹었더니\n 배가 빵빵한 냥이가 됐다!",
+        "\"냥플릭스 나는 솔로냥입니다.\"\n 결국 친구 사이로 남게 된 우리.\n 나는 솔로냥에서 전화 왔다.",
+        "\"내 생선 다 줄 수 있다 냐앙~\"\n 썸 청산 연애 시작!\n 사랑에 빠진 냥이 됐다.",
         ""
     };
     public string[] quest1 = { 
@@ -190,34 +201,72 @@ public class Main_Manager : MonoBehaviour
         if (Input.GetMouseButtonDown(0) || (Input.touchCount > 0 && Input.GetTouch(0).phase == TouchPhase.Began))
         {
             Audio_Manager.Instance.SFX_Click();
+
         }
     }
     
         public void UpdateScreen(int progressNumber) {
         //Debug.Log(progress);
+        if (stage > 4)
+            progressEnd = 6;
         BackImage.sprite = Backgrounds[0];
-        UpperMessage.text = quest1[(stage - 1) * 10+progress];
+        if (progress <= 3)
+        {
+            UpperMessage.text = quest1[(stage - 1) * 10 + progress];
 
-        Main_Sprite.sprite = Main_Image[(stage - 1) * 4 + progressNumber];
-        Right_Sprite.sprite = Right_Image[(stage - 1) * 4 + progressNumber];
-        Left_Sprite.sprite = Left_Image[(stage - 1) * 4 + progressNumber];
+            Main_Image.sprite = Main_Sprite[(stage - 1) * 4 + progressNumber];
+            Right_Image.sprite = Right_Sprite[(stage - 1) * 4 + progressNumber];
+            Left_Image.sprite = Left_Sprite[(stage - 1) * 4 + progressNumber];
+        }
+        else
+        {
+            UpperMessage.text = extraQuest[(stage - 5) * 2 + progress-4];
 
-        Fx_Manager.instance.Ddoing(Main_Sprite.GetComponent<RectTransform>());
-        Fx_Manager.instance.Ddoing(Right_Sprite.GetComponent<RectTransform>());
-        Fx_Manager.instance.Ddoing(Left_Sprite.GetComponent<RectTransform>());
+            Main_Image.sprite = extra_Main_Sprite[(stage - 5) * 2 + progressNumber-4];
+            Right_Image.sprite = extra_Right_Sprite[(stage - 5) * 2 + progressNumber-4];
+            Left_Image.sprite = extra_Left_Sprite[(stage - 5) * 2 + progressNumber-4];
+        }
+
+            /*
+        Fx_Manager.instance.Ddoing(Main_Image.GetComponent<RectTransform>());
+        Fx_Manager.instance.Ddoing(Right_Image.GetComponent<RectTransform>());
+        Fx_Manager.instance.Ddoing(Left_Image.GetComponent<RectTransform>());
+        */
     }
     public void FailScreen(int endNumber)
     {
-        Main_Sprite.sprite = Fail_Image[(stage - 1) * 2 + endNumber-1];
-        cleared[(stage - 1) * 6 + endNumber-1] = true;
-        Failcard.SetActive(true);
-        UpperMessage.text = quest1[(stage - 1) * 10 + 3 + endNumber];
-        FailMessage.text = script1[(stage - 1) * 6 +endNumber - 1];
-        BackImage.sprite = Backgrounds[1];
+        Fx_Manager.instance.Ddoing(Main_Image.GetComponent<RectTransform>());
+        if (stage <= 4)
+        {
 
-        Fx_Manager.instance.Ddoing(Main_Sprite.GetComponent<RectTransform>());
-        Fx_Manager.instance.Ddoing(Right_Sprite.GetComponent<RectTransform>());
-        Fx_Manager.instance.Ddoing(Left_Sprite.GetComponent<RectTransform>());
+            Main_Image.sprite = Fail_Sprite[(stage - 1) * 2 + endNumber - 1];
+            cleared[(stage - 1) * 6 + endNumber - 1] = true;
+            Failcard.SetActive(true);
+            UpperMessage.text = quest1[(stage - 1) * 10 + 3 + endNumber];
+            FailMessage.text = script1[(stage - 1) * 6 + endNumber - 1];
+            BackImage.sprite = Backgrounds[1];
+        }
+        else if(endNumber<3)
+        {
+            Main_Image.sprite = Fail_Sprite[(stage - 1) * 2 + endNumber - 1];
+            cleared[(stage - 1) * 6 + endNumber - 1] = true;
+            Failcard.SetActive(true);
+            UpperMessage.text = quest1[(stage - 1) * 10 + 3 + endNumber];
+            FailMessage.text = script1[(stage - 1) * 6 + endNumber - 1];
+            BackImage.sprite = Backgrounds[1];
+        }
+        else
+        {
+            Main_Image.sprite = Ending_Sprite[(stage - 1) * 4 + endNumber - 3];
+            cleared[(stage - 1) * 6 + endNumber - 1] = true;
+            Failcard.SetActive(true);
+            UpperMessage.text = quest1[(stage - 1) * 10 + 3 + endNumber];
+            FailMessage.text = script1[(stage - 1) * 6 + endNumber - 1];
+            BackImage.sprite = Backgrounds[1];
+        }
+        
+       
+        
 
     }
     int Ending()
@@ -247,7 +296,7 @@ public class Main_Manager : MonoBehaviour
 
         Pre_Ending.SetActive(true);
         Pre_EndingFX.RunEffect();
-        Main_Sprite.sprite = Ending_Image[(stage - 1) * 4 + endNumber-1];
+        Main_Image.sprite = Ending_Sprite[(stage - 1) * 4 + endNumber-1];
         EndMessage.text = script1[(stage-1)*6 + endNumber + 1];
         UpperMessage.text = quest1[(stage - 1) * 10 +5 + endNumber];
         Endcard.SetActive(true);
@@ -266,30 +315,128 @@ public class Main_Manager : MonoBehaviour
     }
     public void ButtonLeft()
     {
+        Fx_Manager.instance.Ddoing(Left_Image.GetComponent<RectTransform>());
         //Debug.Log((stage - 1) * 8 + (progress * 2) + " " + data1[(stage - 1) * 8 + (progress * 2)]);
-        
+        if (progress <= 3)
+        {
+            switch (data1[(stage - 1) * 8 + (progress * 2)])
+            {
+                case 0:
+                    progress++;
+                    if (progress == progressEnd)
+                        EndingScreen(Ending());
+                    else
+                        UpdateScreen(progress);
+                    break;
+                case 1:
+                    if (progress <= 3)
+                    {
+                        EndA = 1;
+                        progress++;
+                        if (progress == progressEnd)
+                            EndingScreen(Ending());
+                        else
+                            UpdateScreen(progress);
+                    }
+                    else
+                        EndingScreen(4);
+                    break;
+                case 3:
+                    EndB = 1;
+                    progress++;
+                    if (progress == progressEnd)
+                        EndingScreen(Ending());
+                    else
+                        UpdateScreen(progress);
+                    break;
+                case 5: FailScreen(1); break;
+                case 6: FailScreen(2); break;
+                case 7: FailScreen(3); break;
+                case 8: FailScreen(4); break;
+                case 9: FailScreen(5); break;
+
+            }
+        }
+        else
+        {
+            switch (extra_Data[(stage-5)*4+((progress-4)*2)])
+            {
+                case 0:
+                    progress++;
+                    if (progress == progressEnd)
+                        EndingScreen(Ending());
+                    else
+                        UpdateScreen(progress);
+                    break;
+                case 1:
+                    if (progress <= 4)
+                    {
+                        EndA = 1;
+                        progress++;
+                        if (progress == progressEnd)
+                            EndingScreen(Ending());
+                        else
+                            UpdateScreen(progress);
+                    }
+                    else
+                        EndingScreen(4);
+                    break;
+                case 3:
+                    EndB = 1;
+                    progress++;
+                    if (progress == progressEnd)
+                        EndingScreen(Ending());
+                    else
+                        UpdateScreen(progress);
+                    break;
+                case 5: FailScreen(1); break;
+                case 6: FailScreen(2); break;
+                case 7: FailScreen(3); break;
+                case 8: FailScreen(4); break;
+                case 9: FailScreen(5); break;
+
+            }
+        }
+        /*
         if (data1[(stage - 1) * 8 + (progress * 2)] == 5)
         {
             FailScreen(1);
         }
-        else if (data1[(stage-1)*8+(progress * 2)] == 6)
+        else if (data1[(stage - 1) * 8 + (progress * 2)] == 6)
         {
             FailScreen(2);
         }
+        else if (data1[(stage - 1) * 8 + (progress * 2)] == 7)
+        {
+            FailScreen(3);
+        }
+        else if (data1[(stage - 1) * 8 + (progress * 2)] == 8)
+        {
+            FailScreen(4);
+        }
+        else if (data1[(stage - 1) * 8 + (progress * 2)] == 9)
+        {
+            FailScreen(5);
+        }
         else if (data1[(stage-1)*8+(progress * 2)] == 1)
         {
-            EndA = 1;
-            progress++;
-            if (progress == 4)
-                EndingScreen(Ending());
+            if (progress <= 4)
+            {
+                EndA = 1;
+                progress++;
+                if (progress == progressEnd)
+                    EndingScreen(Ending());
+                else
+                    UpdateScreen(progress);
+            }
             else
-                UpdateScreen(progress);
+                EndingScreen(4);
         }
         else if (data1[(stage-1)*8+(progress * 2)] == 3)
         {
             EndB = 1;
             progress++;
-            if (progress == 4)
+            if (progress == progressEnd)
                 EndingScreen(Ending());
             else
                 UpdateScreen(progress);
@@ -297,55 +444,132 @@ public class Main_Manager : MonoBehaviour
         else if (data1[(stage-1)*8+(progress * 2)] == 0)
         {
             progress++;
-            if (progress == 4)
+            if (progress == progressEnd)
                 EndingScreen(Ending());
             else
                 UpdateScreen(progress);
         }
+        */
         
     }
     public void ButtonRight()
     {
+        Fx_Manager.instance.Ddoing(Right_Image.GetComponent<RectTransform>());
         //Debug.Log( +" "+data1[(stage - 1) * 8 + (progress * 2)] + 1);
-        if (progress == 4)
-            EndingScreen(Ending());
-        else
+        if (progress <= 3)
         {
-            if (data1[(stage-1)*8+(progress * 2 + 1)] == 5)
+
+            switch (data1[(stage - 1) * 8 + (progress * 2 + 1)])
             {
-                FailScreen(1);
-            }
-            else if (data1[(stage-1)*8+(progress * 2 + 1)] == 6)
-            {
-                FailScreen(2);
-            }
-            else if (data1[(stage-1)*8+(progress * 2 + 1)] == 2)
-            {
-                EndA = 2;
-                progress++;
-                if (progress == 4)
-                    EndingScreen(Ending());
-                else
-                    UpdateScreen(progress);
-            }
-            else if (data1[(stage-1)*8+(progress * 2 + 1)] == 4)
-            {
-                EndB = 2;
-                progress++;
-                if (progress == 4)
-                    EndingScreen(Ending());
-                else
-                    UpdateScreen(progress);
-            }
-            else if (data1[(stage-1)*8+(progress * 2 + 1)] == 0)
-            {
-                progress++;
-                if (progress == 4)
-                    EndingScreen(Ending());
-                else
-                    UpdateScreen(progress);
+                case 0:
+                    progress++;
+                    if (progress == progressEnd)
+                        EndingScreen(Ending());
+                    else
+                        UpdateScreen(progress);
+                    break;
+                case 2:
+                    EndA = 2;
+                    progress++;
+                    if (progress == progressEnd)
+                        EndingScreen(Ending());
+                    else
+                        UpdateScreen(progress);
+                    break;
+                case 4:
+                    EndB = 2;
+                    progress++;
+                    if (progress == progressEnd)
+                        EndingScreen(Ending());
+                    else
+                        UpdateScreen(progress);
+                    break;
+                case 5: FailScreen(1); break;
+                case 6: FailScreen(2); break;
+                case 7: FailScreen(3); break;
+                case 8: FailScreen(4); break;
+                case 9: FailScreen(5); break;
+
             }
         }
+        else
+        {
+            switch (extra_Data[(stage - 5) * 4 + ((progress - 4) * 2) + 1])
+            {
+                case 0:
+                    progress++;
+                    if (progress == progressEnd)
+                        EndingScreen(Ending());
+                    else
+                        UpdateScreen(progress);
+                    break;
+                case 2:
+                    EndA = 2;
+                    progress++;
+                    if (progress == progressEnd)
+                        EndingScreen(Ending());
+                    else
+                        UpdateScreen(progress);
+                    break;
+                case 4:
+                    EndB = 2;
+                    progress++;
+                    if (progress == progressEnd)
+                        EndingScreen(Ending());
+                    else
+                        UpdateScreen(progress);
+                    break;
+                case 5: FailScreen(1); break;
+                case 6: FailScreen(2); break;
+                case 7: FailScreen(3); break;
+                case 8: FailScreen(4); break;
+                case 9: FailScreen(5); break;
+            }
+        }
+                /*
+                     if (data1[(stage - 1) * 8 + (progress * 2 + 1)] == 5)
+                     {
+                         FailScreen(1);
+                     }
+                     else if (data1[(stage - 1) * 8 + (progress * 2 + 1)] == 6)
+                     {
+                         FailScreen(2);
+                     }
+                     if (data1[(stage - 1) * 8 + (progress * 2 + 1)] == 7)
+                     {
+                         FailScreen(3);
+                     }
+                     else if (data1[(stage - 1) * 8 + (progress * 2 + 1)] == 8)
+                     {
+                         FailScreen(4);
+                     }
+                     else if (data1[(stage-1)*8+(progress * 2 + 1)] == 2)
+                     {
+                         EndA = 2;
+                         progress++;
+                         if (progress == progressEnd)
+                             EndingScreen(Ending());
+                         else
+                             UpdateScreen(progress);
+                     }
+                     else if (data1[(stage-1)*8+(progress * 2 + 1)] == 4)
+                     {
+                         EndB = 2;
+                         progress++;
+                         if (progress == progressEnd)
+                             EndingScreen(Ending());
+                         else
+                             UpdateScreen(progress);
+                     }
+                     else if (data1[(stage-1)*8+(progress * 2 + 1)] == 0)
+                     {
+                         progress++;
+                         if (progress == progressEnd)
+                             EndingScreen(Ending());
+                         else
+                             UpdateScreen(progress);
+                     }*/
+
     }
 
     public void CloseAll()
@@ -412,6 +636,8 @@ public class Main_Manager : MonoBehaviour
     {
         CloseAll();
         Album.SetActive(true);
+        Debug.Log(stage);
+        AlManager.ChangeStage(stage);
         AlManager.OpenAlbum();
     }
     public void HavePopUpOn()
@@ -428,6 +654,8 @@ public class Main_Manager : MonoBehaviour
                 HaveText.text = "겨울 방학 보내기"; break;
             case 4:
                 HaveText.text = "아이돌냥 키우기"; break;
+            case 5:
+                HaveText.text = "여름 축제에서"; break;
         }
         HaveCost.text = "X " + cost[stage - 1].ToString();
         
@@ -477,8 +705,10 @@ public class Main_Manager : MonoBehaviour
     IEnumerator CascadeEffectStageSelect()
     {
         SelectScreen.SetActive(true);
-        
-
+        content.position = new Vector3(content.position.x, 0f,content.position.z);
+        yield return null;
+       // content.position = new Vector3(content.position.x, 0f, content.position.z);
+        yield return null;
         foreach (GameObject Select in StageSelect)
         {
             Select.SetActive(true);

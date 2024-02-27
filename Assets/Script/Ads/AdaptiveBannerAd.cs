@@ -8,14 +8,14 @@ using System.Collections.Generic;
 public class AdaptiveBannerAd : MonoBehaviour
 {
     private BannerView _bannerView;
-
+    public GameObject[] asd;
     // Use this for initialization
     void Start()
     {
         // Set your test devices.
         // https://developers.google.com/admob/unity/test-ads
         RequestConfiguration requestConfiguration = new RequestConfiguration
-        {
+        {/*
             TestDeviceIds = new List<string>
             {
                 AdRequest.TestDeviceSimulator,
@@ -26,12 +26,14 @@ public class AdaptiveBannerAd : MonoBehaviour
                 "75EF8D155528C04DACBBA6F36F433035"
                 #endif
             }
+            */
         };
         MobileAds.SetRequestConfiguration(requestConfiguration);
 
         // Initialize the Google Mobile Ads SDK.
         MobileAds.Initialize((InitializationStatus status) =>
         {
+            //asd[0].SetActive(true);
             RequestBanner();
         });
     }
@@ -39,12 +41,8 @@ public class AdaptiveBannerAd : MonoBehaviour
     public void OnGUI()
     {
         GUI.skin.label.fontSize = 60;
-        Rect textOutputRect = new Rect(
-          0.15f * Screen.width,
-          0.25f * Screen.height,
-          0.7f * Screen.width,
-          0.3f * Screen.height);
-        GUI.Label(textOutputRect, "Test");
+       // Rect textOutputRect = new Rect( 0.15f * Screen.width,0.25f * Screen.height, 0.7f * Screen.width, 0.3f * Screen.height);
+       // GUI.Label(textOutputRect, "Test");
     }
 
     private void RequestBanner()
@@ -80,6 +78,7 @@ public class AdaptiveBannerAd : MonoBehaviour
         // Load a banner ad.
         UnityMainThread.wkr.AddJob(() =>
         {
+            //asd[1].SetActive(true);
             _bannerView.LoadAd(adRequest);
         });
         
@@ -100,6 +99,8 @@ public class AdaptiveBannerAd : MonoBehaviour
     {
         Debug.LogError("Banner view failed to load an ad with error : "
                 + error);
+
+        asd[2].SetActive(true);
     }
 
     #endregion

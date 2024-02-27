@@ -48,9 +48,9 @@ public class Album_Manager : MonoBehaviour
             //Debug.Log(CheckedReward[(stageNum - 1) * 6 + i]);
             RewardCheck[i].SetActive(CheckedReward[(stageNum - 1) * 6 + i]);
             if (i < 2)
-                Endings[i].sprite = Main_Manager.instance.Fail_Image[(stageNum - 1) * 2 + i];
+                Endings[i].sprite = Main_Manager.instance.Fail_Sprite[(stageNum - 1) * 2 + i];
             else
-                Endings[i].sprite = Main_Manager.instance.Ending_Image[(stageNum - 1) * 4 + i - 2];
+                Endings[i].sprite = Main_Manager.instance.Ending_Sprite[(stageNum - 1) * 4 + i - 2];
 
             Endings_Title[i].text = Main_Manager.instance.quest1[(stageNum - 1) * 10 + i + 4];
 

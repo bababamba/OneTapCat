@@ -35,7 +35,7 @@ public class EndingFx : MonoBehaviour
         foreach (Vector2 pos in targetPosition)
         {
             
-            image.sprite = Main_Manager.instance.Main_Image[(Main_Manager.instance.stage-1) * 4 + temp++];
+            image.sprite = Main_Manager.instance.Main_Sprite[(Main_Manager.instance.stage-1) * 4 + temp++];
 
             targetRectTransform.DOAnchorPos(pos, 1.0f).SetEase(Ease.OutQuad);
             yield return new WaitForSeconds(1f);

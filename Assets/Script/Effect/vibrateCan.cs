@@ -36,8 +36,10 @@ public class vibrateCan : MonoBehaviour
             targetImage.rectTransform.DOScale(new Vector3(0.01f, 0.01f, 0.01f), 0.3f)
                 .OnComplete(() =>
                 {
+                    targetImage.rectTransform.sizeDelta = new Vector2(643, 649);
                     int temp = r.Next(0, 1000);
                     int Value = 0;
+                    Debug.Log(temp);
                     switch (temp)
                     {
                         case int n when (0 <= n && n <= 1): Value = 30; targetImage.sprite = sprites[4]; break;
@@ -52,8 +54,9 @@ public class vibrateCan : MonoBehaviour
                     StaminaManager.instance.StaminaUp(Value);
                     Fx_Manager.instance.GetItemFx(Value);
                 // 애니메이션이 완료되면 스프라이트를 변경하고 이미지 확대 애니메이션 수행
-                targetImage.sprite = sprites[1];
+                
                     targetImage.rectTransform.DOScale(new Vector3(1.5f, 1.5f, 1.5f), 0.5f);
+                    
                     StartCoroutine(WaitAndClose());
                 });
         }
@@ -66,6 +69,7 @@ public class vibrateCan : MonoBehaviour
         targetImage.sprite = sprites[0];
         targetImage.rectTransform.localScale = new Vector3(1f, 1f, 1f);
         clicked = false;
+        targetImage.rectTransform.sizeDelta = new Vector2(420, 329);
 
         this.transform.parent.gameObject.SetActive(false);
     }
