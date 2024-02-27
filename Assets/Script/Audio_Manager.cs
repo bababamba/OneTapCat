@@ -14,8 +14,13 @@ public class Audio_Manager : MonoBehaviour
 
 
     public AudioClip Title;
+    public AudioClip ingame;
 
-    public AudioClip Click;
+    public AudioClip Start;
+    public AudioClip ending;
+    public AudioClip bad_ending;
+    public AudioClip shop;
+    public AudioClip button;
 
     [SerializeField] GameObject[] CheckOn;
 
@@ -33,23 +38,21 @@ public class Audio_Manager : MonoBehaviour
     }
     public void SoundOn()
     {
-        if (!CheckOn[1].activeSelf)
-        {
-            CheckOn[1].SetActive(true);
-            CheckOn[0].SetActive(false);
+        
+            CheckOn[0].SetActive(true);
+            CheckOn[1].SetActive(false);
             SetBGMVolume(1);
-            SetSFXVolume(1);
-        }
+           
+        
     }
     public void SoundOff()
     {
-        if (CheckOn[1].activeSelf)
-        {
-            CheckOn[0].SetActive(true);
-            CheckOn[1].SetActive(false);
+        
+            CheckOn[1].SetActive(true);
+            CheckOn[0].SetActive(false);
           SetBGMVolume(0);
-          SetSFXVolume(0);
-        }
+          
+        
     }
        public void SetLanguage(int nation)
     {
@@ -61,6 +64,7 @@ public class Audio_Manager : MonoBehaviour
                     CheckOn[3].SetActive(false);
                     CheckOn[4].SetActive(false);
                     //언어 바꾸기
+                    SetSFXVolume(1);
                 }
                 break;
             case 1:
@@ -70,6 +74,7 @@ public class Audio_Manager : MonoBehaviour
                     CheckOn[2].SetActive(false);
                     CheckOn[4].SetActive(false);
                     //언어 바꾸기
+                    SetSFXVolume(0);
                 }
                 break;
             case 2:
@@ -107,13 +112,39 @@ public class Audio_Manager : MonoBehaviour
     }
     public void BGM_Title()
     {
-        Debug.Log(bgm);
-        bgm.clip = Title;
-        bgm.Play();
+        if (bgm.clip != Title)
+        {
+            bgm.clip = Title;
+            bgm.Play();
+        }
+    }
+    public void BGM_InGame()
+    {
+        if (bgm.clip != ingame)
+        {
+            bgm.clip = ingame;
+            bgm.Play();
+        }
+    }
+    public void SFX_Fail()
+    {
+        sfx.PlayOneShot(bad_ending);
+    }
+    public void SFX_Start()
+    {
+        sfx.PlayOneShot(Start);
     }
     public void SFX_Click()
     {
-        sfx.PlayOneShot(Click);
+        sfx.PlayOneShot(button);
+    }
+    public void SFX_Shop()
+    {
+        sfx.PlayOneShot(shop);
+    }
+    public void SFX_Ending()
+    {
+        sfx.PlayOneShot(ending);
     }
 
 

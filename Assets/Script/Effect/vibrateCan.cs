@@ -32,6 +32,7 @@ public class vibrateCan : MonoBehaviour
         if (!clicked)
         {
             clicked = true;
+            Audio_Manager.Instance.SFX_Shop();
             rotater.Kill();
             targetImage.rectTransform.DOScale(new Vector3(0.01f, 0.01f, 0.01f), 0.3f)
                 .OnComplete(() =>

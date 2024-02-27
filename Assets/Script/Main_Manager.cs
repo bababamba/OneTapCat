@@ -55,10 +55,13 @@ public class Main_Manager : MonoBehaviour
     [SerializeField] TMP_Text HaveCost;
     [SerializeField] GameObject DonHavePopUp;
     [SerializeField] GameObject ReallyGoPopUp;
+    [SerializeField] GameObject ReallyQuitPopUp;
 
     [SerializeField] Image[]    StageImages;
     [SerializeField] Sprite[]   StageSprites;
     [SerializeField] RectTransform content;
+
+    [SerializeField] GameObject UpperUI;
 
     public bool NoAds = false;
     int selectGo = 0;
@@ -203,9 +206,21 @@ public class Main_Manager : MonoBehaviour
             Audio_Manager.Instance.SFX_Click();
 
         }
+        #if UNITY_ANDROID
+        if (Input.GetKeyDown(KeyCode.Escape))
+        {
+            if (MainGame.activeSelf)
+                InGameOpenStagesSelectScreen();
+            else
+                ReallyQuit();
+            
+            
+        }
+        #endif
     }
     
         public void UpdateScreen(int progressNumber) {
+        UpperUI.SetActive(true);
         //Debug.Log(progress);
         if (stage > 4)
             progressEnd = 6;
@@ -235,6 +250,8 @@ public class Main_Manager : MonoBehaviour
     }
     public void FailScreen(int endNumber)
     {
+        Audio_Manager.Instance.SFX_Fail();
+        UpperUI.SetActive(false);
         Fx_Manager.instance.Ddoing(Main_Image.GetComponent<RectTransform>());
         if (stage <= 4)
         {
@@ -292,8 +309,9 @@ public class Main_Manager : MonoBehaviour
     }
     public void EndingScreen(int endNumber)
     {
+        Audio_Manager.Instance.SFX_Ending();
         //if(!NoAds)VAds.ShowAd();
-
+        UpperUI.SetActive(false);
         Pre_Ending.SetActive(true);
         Pre_EndingFX.RunEffect();
         Main_Image.sprite = Ending_Sprite[(stage - 1) * 4 + endNumber-1];
@@ -310,12 +328,13 @@ public class Main_Manager : MonoBehaviour
         if (!NoAds)
             VAds.ShowAd();
         //progress--;
+        UpperUI.SetActive(true);
         Failcard.SetActive(false);
         UpdateScreen(progress);
     }
     public void ButtonLeft()
     {
-        Fx_Manager.instance.Ddoing(Left_Image.GetComponent<RectTransform>());
+        Fx_Manager.instance.Ddoing2(Left_Image.GetComponent<RectTransform>());
         //Debug.Log((stage - 1) * 8 + (progress * 2) + " " + data1[(stage - 1) * 8 + (progress * 2)]);
         if (progress <= 3)
         {
@@ -397,64 +416,12 @@ public class Main_Manager : MonoBehaviour
 
             }
         }
-        /*
-        if (data1[(stage - 1) * 8 + (progress * 2)] == 5)
-        {
-            FailScreen(1);
-        }
-        else if (data1[(stage - 1) * 8 + (progress * 2)] == 6)
-        {
-            FailScreen(2);
-        }
-        else if (data1[(stage - 1) * 8 + (progress * 2)] == 7)
-        {
-            FailScreen(3);
-        }
-        else if (data1[(stage - 1) * 8 + (progress * 2)] == 8)
-        {
-            FailScreen(4);
-        }
-        else if (data1[(stage - 1) * 8 + (progress * 2)] == 9)
-        {
-            FailScreen(5);
-        }
-        else if (data1[(stage-1)*8+(progress * 2)] == 1)
-        {
-            if (progress <= 4)
-            {
-                EndA = 1;
-                progress++;
-                if (progress == progressEnd)
-                    EndingScreen(Ending());
-                else
-                    UpdateScreen(progress);
-            }
-            else
-                EndingScreen(4);
-        }
-        else if (data1[(stage-1)*8+(progress * 2)] == 3)
-        {
-            EndB = 1;
-            progress++;
-            if (progress == progressEnd)
-                EndingScreen(Ending());
-            else
-                UpdateScreen(progress);
-        }
-        else if (data1[(stage-1)*8+(progress * 2)] == 0)
-        {
-            progress++;
-            if (progress == progressEnd)
-                EndingScreen(Ending());
-            else
-                UpdateScreen(progress);
-        }
-        */
+        
         
     }
     public void ButtonRight()
     {
-        Fx_Manager.instance.Ddoing(Right_Image.GetComponent<RectTransform>());
+        Fx_Manager.instance.Ddoing2(Right_Image.GetComponent<RectTransform>());
         //Debug.Log( +" "+data1[(stage - 1) * 8 + (progress * 2)] + 1);
         if (progress <= 3)
         {
@@ -526,55 +493,13 @@ public class Main_Manager : MonoBehaviour
                 case 9: FailScreen(5); break;
             }
         }
-                /*
-                     if (data1[(stage - 1) * 8 + (progress * 2 + 1)] == 5)
-                     {
-                         FailScreen(1);
-                     }
-                     else if (data1[(stage - 1) * 8 + (progress * 2 + 1)] == 6)
-                     {
-                         FailScreen(2);
-                     }
-                     if (data1[(stage - 1) * 8 + (progress * 2 + 1)] == 7)
-                     {
-                         FailScreen(3);
-                     }
-                     else if (data1[(stage - 1) * 8 + (progress * 2 + 1)] == 8)
-                     {
-                         FailScreen(4);
-                     }
-                     else if (data1[(stage-1)*8+(progress * 2 + 1)] == 2)
-                     {
-                         EndA = 2;
-                         progress++;
-                         if (progress == progressEnd)
-                             EndingScreen(Ending());
-                         else
-                             UpdateScreen(progress);
-                     }
-                     else if (data1[(stage-1)*8+(progress * 2 + 1)] == 4)
-                     {
-                         EndB = 2;
-                         progress++;
-                         if (progress == progressEnd)
-                             EndingScreen(Ending());
-                         else
-                             UpdateScreen(progress);
-                     }
-                     else if (data1[(stage-1)*8+(progress * 2 + 1)] == 0)
-                     {
-                         progress++;
-                         if (progress == progressEnd)
-                             EndingScreen(Ending());
-                         else
-                             UpdateScreen(progress);
-                     }*/
+               
 
     }
 
     public void CloseAll()
     {
-
+        UpperUI.SetActive(true);
         SelectScreen.SetActive(false);
         Failcard.SetActive(false);
         Endcard.SetActive(false);
@@ -584,10 +509,13 @@ public class Main_Manager : MonoBehaviour
         HavePopUp.SetActive(false);
         DonHavePopUp.SetActive(false);
         BackImage.sprite = Backgrounds[0];
+        
     }
     public void OpenMainGame()
     {
         CloseAll();
+
+        
         MainGame.SetActive(true);
     }
     public void OpenStageSelect(int select)
@@ -611,9 +539,13 @@ public class Main_Manager : MonoBehaviour
         CloseAll();
         MainGame.SetActive(true);
         UpdateScreen(0);
+        Audio_Manager.Instance.BGM_InGame();
+
+        Audio_Manager.Instance.SFX_Start();
     }
     public void OpenStagesSelectScreen()
     {
+        Audio_Manager.Instance.BGM_Title();
         CloseAll();
         progress = 0;
         UpdateScreen(0);
@@ -635,6 +567,7 @@ public class Main_Manager : MonoBehaviour
     public void OpenAlbum()
     {
         CloseAll();
+        Audio_Manager.Instance.BGM_Title();
         Album.SetActive(true);
         Debug.Log(stage);
         AlManager.ChangeStage(stage);
@@ -698,7 +631,15 @@ public class Main_Manager : MonoBehaviour
             case 2: OpenShop(); break;
             case 3: OpenAlbum(); break;
         }
-    
+        Audio_Manager.Instance.BGM_Title();
+    }
+    public void ReallyQuit()
+    {
+        ReallyQuitPopUp.SetActive(true);
+    }
+    public void Quit()
+    {
+        Application.Quit();
     }
 
 

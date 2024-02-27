@@ -13,13 +13,16 @@ public class Fx_Manager : MonoBehaviour
     
     public Transform target;
     public Transform start;
-
+    public RectTransform albumRect;
+    private float PosY;
     public float initialScale = 0.2f;
-    public float targetScale = 0.95f;
+    public float targetScale = 1f;
+    public float targetScale2 = 0.95f;
     public float duration = 0.5f;
     private void Awake()
     {
-            instance = this;
+        PosY = albumRect.localPosition.y;
+        instance = this;
     }
     private void Start()
     {
@@ -46,11 +49,24 @@ public class Fx_Manager : MonoBehaviour
         rect.DOScale(new Vector3(targetScale, targetScale, targetScale), duration).SetEase(Ease.OutBack);
 
     }
+    public void Ddoing2(RectTransform rect)
+    {
+        rect.localScale = new Vector3(initialScale, initialScale, initialScale);
+        rect.DOScale(new Vector3(targetScale2, targetScale2, targetScale2), duration).SetEase(Ease.OutBack);
+
+    }
     public void Gacha(RectTransform rect)
     {
         rect.localScale = new Vector3(initialScale, initialScale, initialScale);
         
         rect.DOScale(new Vector3(targetScale, targetScale, targetScale), duration).SetEase(Ease.OutBack);
+
+    }
+    public void Descend(RectTransform rect)
+    {
+        
+        rect.localPosition = new Vector3(rect.localPosition.x, rect.localPosition.y + 1200f, rect.localPosition.z);
+       rect.DOAnchorPosY(PosY,0.3f).SetEase(Ease.OutBack);
 
     }
 

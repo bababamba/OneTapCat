@@ -16,6 +16,7 @@ public class Album_Manager : MonoBehaviour
     [SerializeField] GameObject[] CGGuard;
     [SerializeField] GameObject[] RewardCheck;
 
+    [SerializeField] RectTransform rect;
 
     [SerializeField] GameObject[] Cats;
     bool[] CheckedReward = { 
@@ -32,6 +33,7 @@ public class Album_Manager : MonoBehaviour
     }
     public void ChangeStage(int stageNum)
     {
+
         CurStage = stageNum;
         CatSelect(stageNum);
         UpdateStars();
@@ -56,6 +58,7 @@ public class Album_Manager : MonoBehaviour
 
 
         }
+        Fx_Manager.instance.Descend(rect);
     }
     public void OpenAlbum()
     {

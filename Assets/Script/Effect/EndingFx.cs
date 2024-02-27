@@ -44,6 +44,7 @@ public class EndingFx : MonoBehaviour
         }
         if (!Main_Manager.instance.NoAds)
             VAds.ShowAd();
+
         EndingFxObject.SetActive(false);
     }
 }
