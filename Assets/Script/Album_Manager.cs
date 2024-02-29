@@ -25,7 +25,8 @@ public class Album_Manager : MonoBehaviour
         false, false, false, false, false, false,
         false, false, false, false, false, false,
         false, false, false, false, false, false,
-        false, false, false, false, false, false };
+        false, false, false, false, false, false 
+    };
     int CurStage = 0;
     void Start()
     {

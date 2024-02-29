@@ -95,7 +95,10 @@ public class StaminaManager : MonoBehaviour
     public void UpdateDisplay()
     {
         if (CurStamina == MaxStamina)
+        {
             time_text.text = "FULL";
+            stamina_text.text = CurStamina.ToString();
+        }
         else
             stamina_text.text = CurStamina.ToString();
         time_text.text = ((int)CurStaminaTime / 60).ToString() +  ":" + ((int)CurStaminaTime % 60).ToString() + "√ ";

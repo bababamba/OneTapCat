@@ -4,7 +4,7 @@ using UnityEngine.UI;
 using UnityEngine;
 using DG.Tweening;
 using Random = System.Random;
-
+using TMPro;
 public class vibrateCan : MonoBehaviour
 {
     public Image targetImage;
@@ -12,6 +12,8 @@ public class vibrateCan : MonoBehaviour
     public float duration = 2.0f;
     private Tweener rotater;
     [SerializeField] Sprite[] sprites;
+    [SerializeField] TMP_Text text;
+    [SerializeField] GameObject Peresto;
 
     Sequence sequence;
 
@@ -47,13 +49,16 @@ public class vibrateCan : MonoBehaviour
 
                         case int n when (2 <= n && n <= 31): Value = 20; targetImage.sprite = sprites[3]; break;
 
-                        case int n when (32 <= n && n <= 671): Value = 15; targetImage.sprite = sprites[2]; break;
+                        case int n when (32 <= n && n <= 671): Value = 15; targetImage.sprite = sprites[3]; break;
 
-                        case int n when (672 <= n && n <= 999): Value = 10; targetImage.sprite = sprites[1]; break;
+                        case int n when (672 <= n && n <= 999): Value = 10; targetImage.sprite = sprites[3]; break;
                     }
 
                     StaminaManager.instance.StaminaUp(Value);
                     Fx_Manager.instance.GetItemFx(Value);
+                    text.gameObject.SetActive(true);
+                    text.text = "물고기 " + Value + "개 획득!";
+                    Peresto.SetActive(false);
                 // 애니메이션이 완료되면 스프라이트를 변경하고 이미지 확대 애니메이션 수행
                 
                     targetImage.rectTransform.DOScale(new Vector3(1.5f, 1.5f, 1.5f), 0.5f);
@@ -71,7 +76,8 @@ public class vibrateCan : MonoBehaviour
         targetImage.rectTransform.localScale = new Vector3(1f, 1f, 1f);
         clicked = false;
         targetImage.rectTransform.sizeDelta = new Vector2(420, 329);
-
+        text.gameObject.SetActive(false);
+        Peresto.SetActive(true);
         this.transform.parent.gameObject.SetActive(false);
     }
 }
