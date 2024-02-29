@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 using DG.Tweening;
 
 public class Fx_Manager : MonoBehaviour
@@ -68,6 +69,13 @@ public class Fx_Manager : MonoBehaviour
         rect.localPosition = new Vector3(rect.localPosition.x-600f, rect.localPosition.y, rect.localPosition.z);
        rect.DOAnchorPosX(PosX,0.3f).SetEase(Ease.OutBack);
 
+    }
+    public void FadeOut(Image image)
+    {
+        image.DOFade(1f, 0.01f).SetEase(Ease.OutBack).OnComplete(()=> {
+            image.DOFade(0f, 0.5f);
+        });
+        
     }
 
 }

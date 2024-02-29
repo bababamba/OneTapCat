@@ -63,6 +63,8 @@ public class Main_Manager : MonoBehaviour
 
     [SerializeField] GameObject UpperUI;
 
+    [SerializeField] Image Cursor;
+
     public bool NoAds = false;
     int selectGo = 0;
     public bool[] cleared =  {  
@@ -204,6 +206,8 @@ public class Main_Manager : MonoBehaviour
         if (Input.GetMouseButtonDown(0) || (Input.touchCount > 0 && Input.GetTouch(0).phase == TouchPhase.Began))
         {
             Audio_Manager.Instance.SFX_Click();
+            Cursor.gameObject.transform.position = Input.mousePosition;
+            Fx_Manager.instance.FadeOut(Cursor);
 
         }
         #if UNITY_ANDROID

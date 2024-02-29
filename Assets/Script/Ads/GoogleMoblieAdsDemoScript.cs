@@ -172,6 +172,9 @@ public class GoogleMoblieAdsDemoScript : MonoBehaviour
     }
     private void TextUpdate()
     {
-        text.text = CurAdCount.ToString() + " / " + MaxAdCount.ToString();
+        UnityMainThread.wkr.AddJob(() =>
+        {
+            text.text = CurAdCount.ToString() + " / " + MaxAdCount.ToString();
+        });
     }
 }
