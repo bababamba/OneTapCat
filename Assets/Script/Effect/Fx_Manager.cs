@@ -73,7 +73,7 @@ public class Fx_Manager : MonoBehaviour
     public void FadeOut(Image image)
     {
         image.DOFade(1f, 0.01f).SetEase(Ease.OutBack).OnComplete(()=> {
-            image.DOFade(0f, 0.5f);
+            image.DOFade(0f, 0.7f);
         });
         
     }

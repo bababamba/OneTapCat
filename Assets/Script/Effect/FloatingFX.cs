@@ -25,6 +25,7 @@ public class FloatingFX : MonoBehaviour
         targetRectTransform.DOScale(new Vector3(targetScale, targetScale, targetScale), duration).SetEase(Ease.OutBack).OnComplete(
             ()=> { 
                 BaseY = targetRectTransform.anchoredPosition.y; 
+                if(targetRectTransform.gameObject.transform.parent.gameObject.activeSelf)
                 StartCoroutine(MoveUpDown()); 
             });       
         // 코루틴 시작

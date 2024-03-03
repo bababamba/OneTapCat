@@ -10,6 +10,7 @@ public class EndingFx : MonoBehaviour
     public RectTransform targetRectTransform; // 대상 UI의 RectTransform
     public Vector2[] targetPosition; // 목표 위치 설정
     public Image image;
+    public Image Screen;
     Sequence sequence;
     [SerializeField] Video_Ad VAds;
     [SerializeField] GameObject EndingFxObject;
@@ -29,7 +30,7 @@ public class EndingFx : MonoBehaviour
     {
         temp = 0;
 
-        sequence = DOTween.Sequence().SetLoops(4, LoopType.Restart);
+        sequence = DOTween.Sequence().SetLoops(4, LoopType.Restart).OnComplete(()=> { Screen.DOFade(1f, 1f); });
         sequence.Append(image.DOFade(1f, 0.5f));
         sequence.Append(image.DOFade(0f, 0.5f));
         foreach (Vector2 pos in targetPosition)
@@ -42,9 +43,12 @@ public class EndingFx : MonoBehaviour
 
 
         }
+            yield return new WaitForSeconds(1f);
         if (!Main_Manager.instance.NoAds)
             VAds.ShowAd();
-
+        Color color = Screen.color;
+        color.a = 0f;
+        Screen.color = color;
         EndingFxObject.SetActive(false);
     }
 }

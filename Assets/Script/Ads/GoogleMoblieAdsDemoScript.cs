@@ -45,6 +45,7 @@ public class GoogleMoblieAdsDemoScript : MonoBehaviour
     {
         if (CurAdCount > 0)
         {
+            CurAdCount--;
             // Clean up the old ad before loading a new one.
             if (_rewardedInterstitialAd != null)
             {
@@ -78,7 +79,7 @@ public class GoogleMoblieAdsDemoScript : MonoBehaviour
                     RegisterEventHandlers(_rewardedInterstitialAd);
 
                     ShowRewardedInterstitialAd();
-                    CurAdCount--;
+                    
                     TextUpdate();
                 });
         }

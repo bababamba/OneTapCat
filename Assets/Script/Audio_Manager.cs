@@ -22,7 +22,7 @@ public class Audio_Manager : MonoBehaviour
     public AudioClip shop;
     public AudioClip button;
 
-    [SerializeField] GameObject[] CheckOn;
+    public GameObject[] CheckOn;
 
     void Awake()
     {

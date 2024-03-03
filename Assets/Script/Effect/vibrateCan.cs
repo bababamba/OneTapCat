@@ -42,7 +42,7 @@ public class vibrateCan : MonoBehaviour
                     targetImage.rectTransform.sizeDelta = new Vector2(643, 649);
                     int temp = r.Next(0, 1000);
                     int Value = 0;
-                    Debug.Log(temp);
+                    //Debug.Log(temp);
                     switch (temp)
                     {
                         case int n when (0 <= n && n <= 1): Value = 30; targetImage.sprite = sprites[4]; break;

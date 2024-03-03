@@ -76,6 +76,8 @@ public class Main_Manager : MonoBehaviour
         false, false, false, false, false, false 
     } ;
 
+    public bool[] stage_Entered = { false, false, false, false, false, false, false, false, false} ;
+
     public int stage = 0;
     int progressEnd = 4;
     int progress = 0;
@@ -198,6 +200,7 @@ public class Main_Manager : MonoBehaviour
         stage = 1;progress = 0;// юс╫ц
         Audio_Manager.Instance.BGM_Title();
         //StartCoroutine(CascadeBugFix());
+        Data_Manager.instance.JsonLoad();
     }
 
     // Update is called once per frame
@@ -208,7 +211,7 @@ public class Main_Manager : MonoBehaviour
             Audio_Manager.Instance.SFX_Click();
             Cursor.gameObject.transform.position = Input.mousePosition;
             Fx_Manager.instance.FadeOut(Cursor);
-
+            Data_Manager.instance.JsonSave();
         }
         #if UNITY_ANDROID
         if (Input.GetKeyDown(KeyCode.Escape))
@@ -539,13 +542,18 @@ public class Main_Manager : MonoBehaviour
     public void StartGame()
     {
         StaminaManager.instance.StaminaDown(cost[stage - 1]);
-        StageImages[stage - 1].sprite = StageSprites[stage - 1];
+        StageEnterd(stage - 1);
         CloseAll();
         MainGame.SetActive(true);
         UpdateScreen(0);
         Audio_Manager.Instance.BGM_InGame();
 
         Audio_Manager.Instance.SFX_Start();
+    }
+    public void StageEnterd(int temp)
+    {
+        StageImages[temp].sprite = StageSprites[temp];
+        stage_Entered[temp] = true;
     }
     public void OpenStagesSelectScreen()
     {
@@ -565,7 +573,7 @@ public class Main_Manager : MonoBehaviour
     public void OpenShop()
     {
         CloseAll();
-
+        Data_Manager.instance.JsonLoad();
         Shop.SetActive(true);
     }
     public void OpenAlbum()

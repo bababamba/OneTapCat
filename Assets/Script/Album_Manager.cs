@@ -19,7 +19,7 @@ public class Album_Manager : MonoBehaviour
     [SerializeField] RectTransform rect;
 
     [SerializeField] GameObject[] Cats;
-    bool[] CheckedReward = { 
+    public bool[] CheckedReward = { 
         false, false, false, false, false, false,
         false, false, false, false, false, false, 
         false, false, false, false, false, false,
